@@ -1,25 +1,42 @@
-import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Routes, Route, Outlet, Link } from "react-router-dom";
+import Login from './components/Login';
+import PrivateRoute from './utils/PrivateRoute';
+
+const router = createBrowserRouter([
+  { path: "/login", element: <Login /> },
+  { path: "/", element: <PrivateRoute component={Home} /> },
+  { path: "/about", element: <PrivateRoute component={About} /> },
+  { path: "/dashboard", element: <PrivateRoute component={Dashboard} /> },
+  { path: "*", element: <PrivateRoute component={NoMatch} /> },
+]);
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
-          <Route path="dashboard" element={<Dashboard />} />
 
-          {/* Using path="*"" means "match anything", so this route
-                acts like a catch-all for URLs that we don't have explicit
-                routes for. */}
-          <Route path="*" element={<NoMatch />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+  return (
+    <RouterProvider router={router} />
   );
+
+  // return (
+  //   <BrowserRouter>
+  //     <Routes>
+  //         <PrivateRoute index element={<Home />} />
+  //       {/* <Route path="/" element={<Layout />}> */}
+  //         {/* <Route index element={<Home />} /> */}
+  //         {/* <Route path="about" element={<About />} /> */}
+  //         {/* <Route path="dashboard" element={<Dashboard />} /> */}
+  //         {/* <Route path="login" element={<Login />} /> */}
+
+
+  //         {/* Using path="*"" means "match anything", so this route
+  //               acts like a catch-all for URLs that we don't have explicit
+  //               routes for. */}
+  //         {/* <Route path="*" element={<NoMatch />} /> */}
+  //       {/* </Route> */}
+  //     </Routes>
+  //   </BrowserRouter>
+  // );
 }
 
 
